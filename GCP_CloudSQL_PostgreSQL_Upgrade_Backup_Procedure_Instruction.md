@@ -20,7 +20,8 @@ gcloud sql instances describe INSTANCE_NAME
 ### 1. Check and Adjust Character Set Configuration (LC_COLLATE)
 #### Verify LC_COLLATE: Connect to the PostgreSQL instance and check LC_COLLATE:
 ```bash
-SELECT datname, datcollate FROM pg_database WHERE datname IN ('template0', 'template1', 'postgres');
+SELECT datname, datcollate FROM pg_database WHERE datname IN
+('template0', 'template1', 'postgres');
 ```
 #### Update LC_COLLATE if LC_COLLATE is not en_US.UTF8 - complete the following steps to reconfigure:
 - Dump the Database:
@@ -241,7 +242,8 @@ Replace 'subscription_name' with the name of your existing subscription
 ```bash
 SELECT pglogical.create_subscription(
     subscription_name := 'test_sub',
-    provider_dsn := 'host=primary-ip port=5432 dbname=postgres user=replication_user password=replicapassword'
+    provider_dsn := 'host=primary-ip port=5432
+    dbname=postgres user=replication_user password=replicapassword'
 );
 ```
 Replace 'test_sub' with your desired subscription name and use the actual IP address and replication credentials of the primary instance.
