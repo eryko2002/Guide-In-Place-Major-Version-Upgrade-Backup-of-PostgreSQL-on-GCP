@@ -227,7 +227,7 @@ gcloud sql backups restore BACKUP_ID \
 ```bash
 gcloud sql operations list --instance=SOURCE_INSTANCE_NAME
 ```
-
+#### 6. After the restore operation completes, recreate any replicas that you deleted in this procedure
 
 ### B. Restoration of database to the new instance
 
