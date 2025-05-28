@@ -1,4 +1,4 @@
-# Guide: In-Place Major Version Upgrade & Backup of PostgreSQL on GCP
+# Guide: In-Place Major Version Upgrade, Backup and Rollback of PostgreSQL on GCP
 
 ## 1. Plan a major version upgrade
 
