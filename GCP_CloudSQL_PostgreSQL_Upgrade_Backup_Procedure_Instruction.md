@@ -231,8 +231,11 @@ gcloud sql operations list --instance=SOURCE_INSTANCE_NAME
 
 ### B. Restoration of database to the new instance
 
-
-#### 1. Create a new Cloud SQL instance
+#### 1. To determine if the target instance has any read replicas, use the gcloud sql instances describe command:
+```bash
+gcloud sql instances describe NEW_INSTANCE_NAME
+```
+#### (Optional) Create a new Cloud SQL instance
 ```bash
 gcloud sql instances create NEW_INSTANCE_NAME --database-version=DATABASE_VERSION --tier=TIER --region=REGION
 ```
