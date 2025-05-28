@@ -141,8 +141,10 @@ SELECT PostGIS_full_version();
 
 ### 5. Note upgrade limitations
 
+- Before you perform an in-place major version upgrade to PostgreSQL 16 and later, upgrade the PostGIS extension for all of your databases to version 3.4.0.
 - PostGIS Version – Before upgrading to PostgreSQL 16 or later, you must update the PostGIS extension to version 3.4.0. If you're using PostgreSQL versions 9.6, 10, 11, or 12, you need to first perform an intermediate upgrade to version 13, 14, or 15, as older versions of PostgreSQL do not support PostGIS 3.4.0.
-- Incompatible Extensions – If the ```pgRouting``` or ```pg_squeeze``` extensions are installed, a major version upgrade is not possible. You must uninstall these extensions before proceeding with the upgrade.
+- Before you perform an in-place major version upgrade to PostgreSQL 17, upgrade the rdkit extension for all of your databases to version 4.6.1.
+- If you install the pg_ivm or pg_squeeze extensions for your instance, then you can't perform a major version upgrade. To fix this, uninstall these extensions and then perform the upgrade.
 - Incompatible Flags – The flags ```vacuum_defer_cleanup_age``` and ```force_parallel_mode``` block the upgrade process. These flags must be removed prior to the upgrade. Note that in PostgreSQL 16 and later, the ```vacuum_defer_cleanup_age``` flag is deprecated, and ```force_parallel_mode``` has been renamed to ```debug_parallel_query```.
 
 ### 6. Check Database Connectivity and Compatibility
