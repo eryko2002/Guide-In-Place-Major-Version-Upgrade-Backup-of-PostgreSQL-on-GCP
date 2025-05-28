@@ -195,67 +195,35 @@ gcloud sql backups describe BACKUP_ID --instance=INSTANCE_NAME
 ```
 This will allow you to confirm the exact time the backup was taken, which can be useful for verification or recovery purposes.
 
-## 5. Performing Database Restoration (Rollback) Procedure from Backup
-
-### A. Restoration of database to the same instance
-
-#### 1. Describe the instance to see whether it has any replicas:
+## 5. Performing Database Restoration (Rollback) Procedure from Backup to the same instance
+### 1. Describe the instance to see whether it has any replicas:
 ```bash
 gcloud sql instances describe SOURCE_INSTANCE_NAME
 ```
 
-#### 2. Delete all replicas:
+### 2. Delete all replicas:
 ```bash
 gcloud sql instances delete REPLICA_NAME
 ```
 Repeat for all replicas.
 
-#### 3. List the backups for the instance
+### 3. List the backups for the instance
 ```bash
 gcloud sql backups list --instance SOURCE_INSTANCE_NAME
 ```
 Find the backup you want to use and record its ```ID``` value.
 
-
-#### 4. Restoring the database from a backup
+### 4. Restoring the database from a backup
 ```bash
 gcloud sql backups restore BACKUP_ID \
 --restore-instance=SOURCE_INSTANCE_NAME
 ```
 
-#### 5. Verification after restoration
+### 5. Verification after restoration
 ```bash
 gcloud sql operations list --instance=SOURCE_INSTANCE_NAME
 ```
-#### 6. After the restore operation completes, recreate any replicas that you deleted in this procedure
-
-### B. Restoration of database to the new instance
-
-#### 1. To determine if the target instance has any read replicas, use the gcloud sql instances describe command:
-```bash
-gcloud sql instances describe NEW_INSTANCE_NAME
-```
-#### (Optional) Create a new Cloud SQL instance
-```bash
-gcloud sql instances create NEW_INSTANCE_NAME --database-version=DATABASE_VERSION --tier=TIER --region=REGION
-```
-#### 2. List the backups for the source Cloud SQL instance
-```bash
-gcloud sql backups list \
---instance SOURCE_INSTANCE_NAME
-```
-Find the backup you want to use and record its ```ID``` value.
-
-#### 3. Restoring of database to the new instance
-```bash
-gcloud sql backups restore BACKUP_ID \
---restore-instance=NEW_INSTANCE_NAME \
---backup-instance=SOURCE_INSTANCE_NAME
-```
-#### 4. Verification after restoration
-```bash
-gcloud sql operations list --instance=NEW_INSTANCE_NAME
-```
+### 6. After the restore operation completes, recreate any replicas that you deleted in this procedure
 
 ## 6. Complete the Major Version Upgrade
 ### 1. Re-enable pglogical Replication (if used)
