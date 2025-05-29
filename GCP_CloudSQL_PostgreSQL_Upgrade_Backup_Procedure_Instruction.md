@@ -22,38 +22,6 @@ gcloud sql instances describe INSTANCE_NAME
 SELECT datname, datcollate FROM pg_database WHERE datname IN
 ('template0', 'template1', 'postgres');
 ```
-#### Update LC_COLLATE if LC_COLLATE is not en_US.UTF8 - complete the following steps to reconfigure:
-- Dump the Database:
-
-```bash
-pg_dump -U USERNAME -h INSTANCE_IP -d DATABASE_NAME > db_backup.sql
-```
-- Drop the Database:
-
-```bash
-DROP DATABASE DATABASE_NAME;
-```
-- Create a New Database with en_US.UTF8 Encoding:
-
-```bash
-CREATE DATABASE DATABASE_NAME WITH ENCODING 'UTF8' LC_COLLATE = 'en_US.UTF8';
-```
-- Reload Data:
-
-```bash
-psql -U USERNAME -h INSTANCE_IP -d DATABASE_NAME < db_backup.sql
-```
-
-#### Alternative Method: Instead of dumping and recreating the database, you can rename it like below:
-
-- Close all connections to the database.
-- Rename the database.
-```bash
-ALTER DATABASE DATABASE_NAME RENAME TO NEW_NAME;
-```
-- Update your application configurations to use the new database name.
-- Create a new, empty database with the default encoding.
-
 ### 2. Review and Manage Read Replicas:
 
 #### Objective: Disable or delete read replicas, as cross-version replication is not supported.
