@@ -3,6 +3,7 @@
 ## 1. Plan a major version upgrade
 
 1. Assess current and target versions:
+   
 To check database instances, run the following command:
 
 ```bash
