@@ -43,12 +43,12 @@ SELECT datname, datcollate FROM pg_database WHERE datname IN
 | PostgreSQL 9.6                    | 3.2.5                     |
 | PostgreSQL 10                     | 3.2.5                     |
 | PostgreSQL 11                     | 3.2.5                     |
-| PostgreSQL 12                     | 3.2.5                     |
-| PostgreSQL 13                     | 3.4.0                     |
-| PostgreSQL 14                     | 3.4.0                     |
-| PostgreSQL 15                     | 3.4.0                     |
-| PostgreSQL 16                     | 3.4.0                     |
-| PostgreSQL 17                     | 3.4.3                     |
+| PostgreSQL 12                     | 3.4.4                     |
+| PostgreSQL 13                     | 3.5.2                     |
+| PostgreSQL 14                     | 3.5.2                     |
+| PostgreSQL 15                     | 3.5.2                     |
+| PostgreSQL 16                     | 3.5.2                     |
+| PostgreSQL 17                     | 3.5.2                     |
 
 - To specify the version of PostGIS in your CREATE EXTENSION command, use the VERSION clause.
 - For more information on PostGIS installation and management, refer to the <https://postgis.net/>
