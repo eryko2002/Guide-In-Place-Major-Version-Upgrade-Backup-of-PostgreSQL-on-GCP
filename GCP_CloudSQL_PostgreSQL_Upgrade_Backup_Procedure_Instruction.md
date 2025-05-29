@@ -143,39 +143,3 @@ gcloud sql backups restore BACKUP_ID \
 ```bash
 gcloud sql operations list --instance=SOURCE_INSTANCE_NAME
 ```
-
-## 6. Complete the Major Version Upgrade
-### 1. Re-enable pglogical Replication (if used)
-Steps to re-enable pglogical replication:
-- Drop the Existing Subscription on the Replica: You can drop the existing subscription on the replica using the following SQL command:
-```bash
-SELECT pglogical.drop_subscription(subscription_name := 'subscription_name');
-```
-Replace 'subscription_name' with the name of your existing subscription
-
-
-- Recreate the Subscription on the Destination Replica: After dropping the old subscription, recreate it on the destination replica with the correct connection details to the primary instance:
-```bash
-SELECT pglogical.create_subscription(
-    subscription_name := 'test_sub',
-    provider_dsn := 'host=primary-ip port=5432
-    dbname=postgres user=replication_user password=replicapassword'
-);
-```
-Replace 'test_sub' with your desired subscription name and use the actual IP address and replication credentials of the primary instance.
-
-- Check the Subscription Status: Verify that the subscription is working properly by checking its status:
-```bash
-SELECT * FROM pglogical.show_subscription_status('test_sub');
-```
-### 2. Recreate Read Replicas (if deleted before upgrade)
-If you deleted any read replicas before the upgrade, you can create new read replicas after upgrading the primary instance. These new replicas will automatically be provisioned with the latest database version.
-Steps to create a new read replica:
-- **1**: Ensure the Primary Instance is Upgraded.
-
-- **2**: Create a New Read Replica: You can use the gcloud sql instances create command to create a new read replica. The command is as follows:
-```bash
-gcloud sql instances create REPLICA_INSTANCE_NAME \
---master-instance-name=PRIMARY_INSTANCE_NAME \
---database-version=VERSION
-```
