@@ -62,7 +62,7 @@ SELECT PostGIS_full_version();
 - If there are no warnings in the output, you can proceed with the upgrade.
 
 **5**: Verify Permissions for Extension Management
-- Only users with the cloudsqlsuperuser role (such as the default postgres user) can manage extensions. Ensure you are using a user with these permissions to manage extensions as needed.
+- Only users with the cloudsqlsuperuser role can manage extensions. Ensure you are using a user with these permissions to manage extensions as needed.
 
 ### 3. Note upgrade limitations
 
