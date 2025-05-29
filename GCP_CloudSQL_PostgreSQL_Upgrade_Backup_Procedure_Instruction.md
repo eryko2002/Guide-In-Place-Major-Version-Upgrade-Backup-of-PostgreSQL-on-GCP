@@ -12,7 +12,7 @@ gcloud sql instances list
 To check the database versions that you can target for an in-place upgrade on your instance, do the following:
 
 ```bash
-gcloud sql instances describe opl-bgs-main-0ps4-db --format=json | jq '.upgradableDatabaseVersions'
+gcloud sql instances describe INSTANCE_NAME --format=json | jq '.upgradableDatabaseVersions'
 ```
 - Replace INSTANCE_NAME with the name of your Cloud SQL instance. Look for the upgradableDatabaseVersions section in the output, which shows the versions you can target.
 
