@@ -12,10 +12,9 @@ gcloud sql instances list
 To check the database versions that you can target for an in-place upgrade on your instance, do the following:
 
 ```bash
-gcloud sql instances describe INSTANCE_NAME
+gcloud sql instances describe opl-bgs-main-0ps4-db --format=json | jq '.upgradableDatabaseVersions'
 ```
 - Replace INSTANCE_NAME with the name of your Cloud SQL instance. Look for the upgradableDatabaseVersions section in the output, which shows the versions you can target.
-- Review Compatibility: Consult the GCP Database Version Policy and your target version’s release notes. Be aware that major upgrades may introduce incompatible changes that might require updates to application code, schema, or settings.
 
 2. Review Changes and Incompatibilities
 
@@ -77,19 +76,14 @@ SELECT PostGIS_full_version();
 
 ## 3. Upgrade the Database Major Version In-Place
 
-### 1. Check upgradable database versions:
-```bash
-gcloud sql instances describe opl-bgs-main-0ps4-db --format=json | jq '.upgradableDatabaseVersions'
-```
-
-### 2. Initiate the Upgrade:
+### 1. Initiate the Upgrade:
 - Use the gcloud Command: The upgrade process is initiated by running the gcloud sql instances patch command. Replace the placeholder values for your specific instance and the desired target database version:
 ```bash
 gcloud sql instances patch INSTANCE_NAME --database-version=DATABASE_VERSION
 ```
 - Instance Unavailability: The instance will become unavailable for a period while the upgrade is performed, so plan for downtime.
 
-### 3. Monitor the Upgrade Process:
+### 2. Monitor the Upgrade Process:
 - Get Upgrade Operation Status: Use the following command to monitor the status of the upgrade operation:
 ```bash
 gcloud sql operations list --instance=INSTANCE_NAME
@@ -98,7 +92,7 @@ gcloud sql operations list --instance=INSTANCE_NAME
 ```bash
 gcloud sql operations describe OPERATION
 ```
-## 4. Automatic Pre-Upgrade and Post-Upgrade Backups
+## 3. Automatic Pre-Upgrade and Post-Upgrade Backups
 
 ### 1. View a list of backups
 Once you perform a major version upgrade, Cloud SQL automatically creates two on-demand backups as part of the upgrade process:
