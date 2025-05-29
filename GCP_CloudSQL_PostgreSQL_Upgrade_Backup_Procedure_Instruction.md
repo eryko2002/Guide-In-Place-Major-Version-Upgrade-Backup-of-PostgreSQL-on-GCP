@@ -26,55 +26,8 @@ gcloud sql instances describe INSTANCE_NAME
 SELECT datname, datcollate FROM pg_database WHERE datname IN
 ('template0', 'template1', 'postgres');
 ```
-### 2. Review and Manage Read Replicas:
 
-#### Objective: Disable or delete read replicas, as cross-version replication is not supported.
-#### Disable or Delete Each Replica - do the following steps:
-- **1**: List Read Replicas:
-```bash
-gcloud sql instances list --filter="masterInstanceName=PRIMARY_INSTANCE_NAME"
-```
-
-- **2**: Delete Each Read Replica:
-```bash
-gcloud sql instances delete READ_REPLICA_NAME
-```
-Replace READ_REPLICA_NAME with the name of the replica instance. You’ll be prompted to confirm the deletion.
-
-### 3. Disable pglogical Logical Replication Before Upgrade:
-
-#### Objective: Ensure that all pglogical logical replication configurations are disabled to prevent replication conflicts during the PostgreSQL upgrade.
-
-#### Steps:
-**1**: Identify Existing Subscriptions:
-- Connect to your primary PostgreSQL instance using a client (such as psql) and list all existing pglogical subscriptions with the following command:
-```bash
-SELECT * FROM pglogical.show_subscription_status();
-```
-Review the output to identify active subscriptions.
-
-**2**: Disable Each Subscription:
-- For each subscription, disable it by using the pglogical.alter_subscription_disable function.
-- Replace subscription_name with the actual name of the subscription and set the immediate parameter to true if the subscription needs to be disabled right away.
-```bash
-SELECT * FROM pglogical.alter_subscription_disable('subscription_name', true);
-```
-This command will stop the subscription and disconnect it from the provider immediately.
-
-**3**: Drop Replication Slots:
-- Once the subscriptions are disabled, drop any associated replication slots to free up resources and avoid conflicts.
-- Run the following command to remove all replication slots related to pglogical:
-```bash
-SELECT pg_drop_replication_slot(slot_name) FROM pg_replication_slots
-  WHERE slot_name IN (SELECT slot_name FROM pg_replication_slots);
-```
-
-**4**: Confirm Status:
-- Confirm that all pglogical subscriptions and replication slots have been disabled by re-running the initial commands:
-```bash
-SELECT * FROM pglogical.show_subscription_status();
-```
-### 4. Manage PostgreSQL Extensions Before Upgrade
+### 2. Manage PostgreSQL Extensions Before Upgrade
 #### Objective: Ensure that all PostgreSQL extensions are compatible with the target version to prevent issues during the upgrade.
 #### Steps:
 **1**: Identify and Review Existing Extensions
@@ -111,7 +64,7 @@ SELECT PostGIS_full_version();
 **5**: Verify Permissions for Extension Management
 - Only users with the cloudsqlsuperuser role (such as the default postgres user) can manage extensions. Ensure you are using a user with these permissions to manage extensions as needed.
 
-### 5. Note upgrade limitations
+### 3. Note upgrade limitations
 
 - Before you perform an in-place major version upgrade to PostgreSQL 16 and later, upgrade the PostGIS extension for all of your databases to version 3.4.0.
 - PostGIS Version – Before upgrading to PostgreSQL 16 or later, you must update the PostGIS extension to version 3.4.0. If you're using PostgreSQL versions 9.6, 10, 11, or 12, you need to first perform an intermediate upgrade to version 13, 14, or 15, as older versions of PostgreSQL do not support PostGIS 3.4.0.
@@ -119,7 +72,7 @@ SELECT PostGIS_full_version();
 - If you install the pg_ivm or pg_squeeze extensions for your instance, then you can't perform a major version upgrade. To fix this, uninstall these extensions and then perform the upgrade.
 - Incompatible Flags – The flags ```vacuum_defer_cleanup_age``` and ```force_parallel_mode``` block the upgrade process. These flags must be removed prior to the upgrade. Note that in PostgreSQL 16 and later, the ```vacuum_defer_cleanup_age``` flag is deprecated, and ```force_parallel_mode``` has been renamed to ```debug_parallel_query```.
 
-### 6. Check Database Connectivity and Compatibility
+### 4. Check Database Connectivity and Compatibility
 - When performing an upgrade from one major version to another, attempt to connect to each database to see if there are any compatibility issues. Ensure that your databases can connect to each other. Check the ```datallowconn``` field for each database to ensure that a connection is allowed. A t value means that it's allowed, and an f value indicates that a connection can't be established.
 
 ## 3. Upgrade the Database Major Version In-Place
