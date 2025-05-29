@@ -16,7 +16,6 @@ gcloud sql instances describe INSTANCE_NAME
 2. Review Changes and Incompatibilities
 
 ## 2. Prepare for a major version upgrade 
-
 ### 1. Check and Adjust Character Set Configuration (LC_COLLATE)
 #### Verify LC_COLLATE: Connect to the PostgreSQL instance and check LC_COLLATE:
 ```bash
@@ -26,7 +25,27 @@ SELECT datname, datcollate FROM pg_database WHERE datname IN
 #### Update LC_COLLATE if LC_COLLATE is not en_US.UTF8 - complete the following steps to reconfigure:
 - Dump the Database:
 
-#### Update LC_COLLATE if LC_COLLATE is not en_US.UTF8: Rename the database like below:
+```bash
+pg_dump -U USERNAME -h INSTANCE_IP -d DATABASE_NAME > db_backup.sql
+```
+- Drop the Database:
+
+```bash
+DROP DATABASE DATABASE_NAME;
+```
+- Create a New Database with en_US.UTF8 Encoding:
+
+```bash
+CREATE DATABASE DATABASE_NAME WITH ENCODING 'UTF8' LC_COLLATE = 'en_US.UTF8';
+```
+- Reload Data:
+
+```bash
+psql -U USERNAME -h INSTANCE_IP -d DATABASE_NAME < db_backup.sql
+```
+
+#### Alternative Method: Instead of dumping and recreating the database, you can rename it like below:
+
 - Close all connections to the database.
 - Rename the database.
 ```bash
