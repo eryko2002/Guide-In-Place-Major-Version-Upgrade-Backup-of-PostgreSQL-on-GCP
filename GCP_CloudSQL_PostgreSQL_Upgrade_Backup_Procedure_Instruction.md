@@ -127,29 +127,22 @@ This will allow you to confirm the exact time the backup was taken, which can be
 gcloud sql instances describe SOURCE_INSTANCE_NAME
 ```
 
-### 2. Delete all replicas:
-```bash
-gcloud sql instances delete REPLICA_NAME
-```
-Repeat for all replicas.
-
-### 3. List the backups for the instance
+### 2. List the backups for the instance
 ```bash
 gcloud sql backups list --instance SOURCE_INSTANCE_NAME
 ```
 Find the backup you want to use and record its ```ID``` value.
 
-### 4. Restoring the database from a backup
+### 3. Restoring the database from a backup
 ```bash
 gcloud sql backups restore BACKUP_ID \
 --restore-instance=SOURCE_INSTANCE_NAME
 ```
 
-### 5. Verification after restoration
+### 4. Verification after restoration
 ```bash
 gcloud sql operations list --instance=SOURCE_INSTANCE_NAME
 ```
-### 6. After the restore operation completes, recreate any replicas that you deleted in this procedure
 
 ## 6. Complete the Major Version Upgrade
 ### 1. Re-enable pglogical Replication (if used)
