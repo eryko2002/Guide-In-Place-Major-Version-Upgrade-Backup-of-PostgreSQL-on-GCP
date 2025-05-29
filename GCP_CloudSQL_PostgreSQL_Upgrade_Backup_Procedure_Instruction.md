@@ -3,9 +3,12 @@
 ## 1. Plan a major version upgrade
 
 1. Assess current and target versions:
+To check database instances, run the following command:
 
+```bash
+gcloud sql instances list
+```
 To check the database versions that you can target for an in-place upgrade on your instance, do the following:
-
 
 ```bash
 gcloud sql instances describe INSTANCE_NAME
