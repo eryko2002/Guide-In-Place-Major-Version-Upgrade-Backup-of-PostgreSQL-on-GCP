@@ -77,14 +77,19 @@ SELECT PostGIS_full_version();
 
 ## 3. Upgrade the Database Major Version In-Place
 
-### 1. Initiate the Upgrade:
+### 1. Check upgradable database versions:
+```bash
+gcloud sql instances describe opl-bgs-main-0ps4-db --format=json | jq '.upgradableDatabaseVersions'
+```
+
+### 2. Initiate the Upgrade:
 - Use the gcloud Command: The upgrade process is initiated by running the gcloud sql instances patch command. Replace the placeholder values for your specific instance and the desired target database version:
 ```bash
 gcloud sql instances patch INSTANCE_NAME --database-version=DATABASE_VERSION
 ```
 - Instance Unavailability: The instance will become unavailable for a period while the upgrade is performed, so plan for downtime.
 
-### 2. Monitor the Upgrade Process:
+### 3. Monitor the Upgrade Process:
 - Get Upgrade Operation Status: Use the following command to monitor the status of the upgrade operation:
 ```bash
 gcloud sql operations list --instance=INSTANCE_NAME
