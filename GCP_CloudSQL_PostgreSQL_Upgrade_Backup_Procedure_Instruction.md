@@ -144,13 +144,18 @@ gcloud sql backups list --instance SOURCE_INSTANCE_NAME
 ```
 Find the backup you want to use and record its ```ID``` value.
 
-### 3. Restoring the database from a backup
+### 3. Check details about a specific backup for the instance
+```bash
+gcloud sql backups describe --instance SOURCE_INSTANCE_NAM BACKUP_ID
+```
+
+### 4. Restoring the database from a backup
 ```bash
 gcloud sql backups restore BACKUP_ID \
 --restore-instance=SOURCE_INSTANCE_NAME
 ```
 
-### 4. Verification after restoration
+### 5. Verification after restoration
 ```bash
 gcloud sql operations list --instance=SOURCE_INSTANCE_NAME
 ```
