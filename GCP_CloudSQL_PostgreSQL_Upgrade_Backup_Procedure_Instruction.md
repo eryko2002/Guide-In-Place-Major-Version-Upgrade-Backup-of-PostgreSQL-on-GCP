@@ -162,7 +162,7 @@ gcloud sql backups restore BACKUP_ID --restore-instance=SOURCE_INSTANCE_NAME
 gcloud sql operations list --instance=SOURCE_INSTANCE_NAME
 ```
 ## 6. Performing Database Restoration (Rollback) Procedure from Backup to the new instance
-This procedure allows restoring a backup from the source instance to a new instance. The target instance must have the same PostgreSQL version as the pre-upgrade backup taken from the source instance.
+This procedure allows restoring a backup from the source instance to the new instance. The target instance must have the same PostgreSQL version as the pre-upgrade backup taken from the source instance.
 ### 1. To determine if the target instance has any read replicas, use the gcloud sql instances describe command:
 ```bash
 gcloud sql instances describe NEW_INSTANCE_NAME
