@@ -186,7 +186,7 @@ gcloud sql backups restore BACKUP_ID \
 gcloud sql operations list --instance=NEW_INSTANCE_NAME
 ```
 ## 7. Renaming the new instance to the original name
-### 1. Stop the VM.
+### 1. Stop the instance.
 ### 2. Rename the new instance to the source name
 ```bash
 gcloud compute instances set-name NEW_INSTANCE_NAME \
@@ -194,4 +194,4 @@ gcloud compute instances set-name NEW_INSTANCE_NAME \
     --project=PROJECT_ID \
     --zone=ZONE
 ```
-### 3. Restart the VM.
+### 3. Restart the instance.
