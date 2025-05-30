@@ -103,7 +103,7 @@ The OPERATION_ID value is provided immediately after an exception or timeout occ
 ### 4. Note on exceptions:
 It is possible that you may see this exception again. Do not worry—within a few minutes, your post-upgrade backup will be visible. Verify its success later.
 
-## 3. Automatic Pre-Upgrade and Post-Upgrade Backups
+## 4. Automatic Pre-Upgrade and Post-Upgrade Backups
 
 ### 1. View a list of backups
 Once you perform a major version upgrade, Cloud SQL automatically creates two on-demand backups as part of the upgrade process:
@@ -132,7 +132,7 @@ gcloud sql backups describe BACKUP_ID --instance=INSTANCE_NAME
 ```
 This will allow you to confirm the exact time the backup was taken, which can be useful for verification or recovery purposes.
 
-## 4. Performing Database Restoration (Rollback) Procedure from Backup to the same instance
+## 5. Performing Database Restoration (Rollback) Procedure from Backup to the same instance
 This procedure applies only when restoring a backup to the same instance if the backup was taken from the same database version as the current instance. 
 However, if the database version has not been upgraded (i.e., remains the same as before), you can restore from a backup taken prior to the upgrade to revert to the previous state.
 
@@ -161,7 +161,7 @@ gcloud sql backups restore BACKUP_ID --restore-instance=SOURCE_INSTANCE_NAME
 ```bash
 gcloud sql operations list --instance=SOURCE_INSTANCE_NAME
 ```
-## 5. Performing Database Restoration (Rollback) Procedure from Backup to the new instance
+## 6. Performing Database Restoration (Rollback) Procedure from Backup to the new instance
 This procedure allows restoring a backup from the source instance to the new instance. The target instance must have the same PostgreSQL version as the pre-upgrade backup taken from the source instance.
 ### 1. To determine if the target instance has any read replicas, use the gcloud sql instances describe command:
 ```bash
