@@ -163,3 +163,5 @@ gcloud sql backups restore BACKUP_ID \
 ```bash
 gcloud sql operations list --instance=SOURCE_INSTANCE_NAME
 ```
+## 6. Performing Database Restoration (Rollback) Procedure from Backup to the new instance
+
