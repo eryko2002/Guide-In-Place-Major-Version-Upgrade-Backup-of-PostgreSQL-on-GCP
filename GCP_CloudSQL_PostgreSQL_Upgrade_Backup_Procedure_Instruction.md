@@ -92,6 +92,13 @@ gcloud sql operations list --instance=INSTANCE_NAME
 ```bash
 gcloud sql operations describe OPERATION
 ```
+
+### 3. Waiting for the operation to complete: If the operation takes longer, it is recommended to use the following command:
+```bash
+gcloud beta sql operations wait --project=PROJECT_ID OPERATION_ID
+```
+The OPERATION_ID value is provided immediately after an exception or timeout occurs. Simply copy the recommended command and execute it.
+
 ## 3. Automatic Pre-Upgrade and Post-Upgrade Backups
 
 ### 1. View a list of backups
