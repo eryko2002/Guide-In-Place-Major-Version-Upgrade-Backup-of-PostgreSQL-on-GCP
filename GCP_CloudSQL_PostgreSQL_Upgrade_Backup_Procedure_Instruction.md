@@ -90,8 +90,9 @@ gcloud sql operations list --instance=INSTANCE_NAME
 ```
 - Track the Upgrade with gcloud: Once you have the operation name, you can track its progress using the describe command:
 ```bash
-gcloud sql operations describe OPERATION_NAME
+gcloud sql operations describe OPERATION_ID
 ```
+The OPERATION_ID corresponds to the value in the NAME column
 
 ### 3. Waiting for the operation to complete: If the operation takes longer, it is recommended to use the following command:
 ```bash
