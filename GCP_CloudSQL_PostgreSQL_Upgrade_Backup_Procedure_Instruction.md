@@ -133,8 +133,7 @@ gcloud sql backups describe BACKUP_ID --instance=INSTANCE_NAME
 This will allow you to confirm the exact time the backup was taken, which can be useful for verification or recovery purposes.
 
 ## 5. Performing Database Restoration (Rollback) Procedure from Backup to the same instance
-Note: This procedure applies only when restoring a backup to the same instance if the backup was taken from the same database version as the current instance. Restoring a backup from a different database version (e.g., from an older to a newer version or vice versa) is not supported.
-
+This procedure applies only when restoring a backup to the same instance if the backup was taken from the same database version as the current instance. 
 However, if the database version has not been upgraded (i.e., remains the same as before), you can restore from a backup taken prior to the upgrade to revert to the previous state.
 
 ### 1. Describe the instance to see whether it has any replicas:
@@ -155,8 +154,7 @@ gcloud sql backups describe --instance SOURCE_INSTANCE_NAM BACKUP_ID
 
 ### 4. Restoring the database from a backup
 ```bash
-gcloud sql backups restore BACKUP_ID \
---restore-instance=SOURCE_INSTANCE_NAME
+gcloud sql backups restore BACKUP_ID --restore-instance=SOURCE_INSTANCE_NAME
 ```
 
 ### 5. Verification after restoration
@@ -164,4 +162,26 @@ gcloud sql backups restore BACKUP_ID \
 gcloud sql operations list --instance=SOURCE_INSTANCE_NAME
 ```
 ## 6. Performing Database Restoration (Rollback) Procedure from Backup to the new instance
+This procedure allows restoring a backup from the source instance to a new instance. The target instance must have the same PostgreSQL version as the pre-upgrade backup taken from the source instance.
+### 1. To determine if the target instance has any read replicas, use the gcloud sql instances describe command:
+```bash
+gcloud sql instances describe NEW_INSTANCE_NAME
+```
+Optionally create new instance.
 
+### 2.List the backups for the source Cloud SQL instance
+```bash
+gcloud sql backups list --instance SOURCE_INSTANCE_NAME
+```
+Find the backup you want to use and record its ID value.
+
+### 3. Restoring of database to the new instance
+```bash
+gcloud sql backups restore BACKUP_ID \
+--restore-instance=NEW_INSTANCE_NAME \
+--backup-instance=SOURCE_INSTANCE_NAME
+```
+### 4. Verification after restoration
+```bash
+gcloud sql operations list --instance=NEW_INSTANCE_NAME
+```
