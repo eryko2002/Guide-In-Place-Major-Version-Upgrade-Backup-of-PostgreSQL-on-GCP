@@ -163,7 +163,3 @@ gcloud sql backups restore BACKUP_ID \
 ```bash
 gcloud sql operations list --instance=SOURCE_INSTANCE_NAME
 ```
-
-## 6. Restoring from a pre-upgrade backup (if the upgrade failed and the database version remains unchanged)
-Note: This procedure should be used only if the upgrade process failed and the database version has not been changed. 
-
