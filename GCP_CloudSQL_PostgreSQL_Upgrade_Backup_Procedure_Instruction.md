@@ -134,6 +134,7 @@ This will allow you to confirm the exact time the backup was taken, which can be
 
 ## 5. Performing Database Restoration (Rollback) Procedure from Backup to the same instance
 Note: This procedure applies only when restoring a backup to the same instance if the backup was taken from the same database version as the current instance. Restoring a backup from a different database version (e.g., from an older to a newer version or vice versa) is not supported.
+However, if the database version has not been upgraded (i.e., remains the same as before), you can restore from a backup taken prior to the upgrade to revert to the previous state.
 
 ### 1. Describe the instance to see whether it has any replicas:
 ```bash
@@ -161,3 +162,7 @@ gcloud sql backups restore BACKUP_ID \
 ```bash
 gcloud sql operations list --instance=SOURCE_INSTANCE_NAME
 ```
+
+## 6. Restoring from a pre-upgrade backup (if the upgrade failed and the database version remains unchanged)
+Note: This procedure should be used only if the upgrade process failed and the database version has not been changed. 
+
