@@ -100,6 +100,9 @@ gcloud beta sql operations wait --project=PROJECT_ID OPERATION_ID
 ```
 The OPERATION_ID value is provided immediately after an exception or timeout occurs. Simply copy the recommended command and execute it.
 
+### 4. Note on exceptions:
+It is possible that you may see this exception again. Do not worry—within a few minutes, your post-upgrade backup will be visible. Verify its success later.
+
 ## 3. Automatic Pre-Upgrade and Post-Upgrade Backups
 
 ### 1. View a list of backups
