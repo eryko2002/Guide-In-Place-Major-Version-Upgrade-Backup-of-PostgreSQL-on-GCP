@@ -133,6 +133,8 @@ gcloud sql backups describe BACKUP_ID --instance=INSTANCE_NAME
 This will allow you to confirm the exact time the backup was taken, which can be useful for verification or recovery purposes.
 
 ## 5. Performing Database Restoration (Rollback) Procedure from Backup to the same instance
+Note: This procedure applies only when restoring a backup to the same instance if the backup was taken from the same database version as the current instance. Restoring a backup from a different database version (e.g., from an older to a newer version or vice versa) is not supported.
+
 ### 1. Describe the instance to see whether it has any replicas:
 ```bash
 gcloud sql instances describe SOURCE_INSTANCE_NAME
